@@ -65,20 +65,20 @@ var boolCounter = 0;
 
 //Preload images and sounds....
 function preload(){
-	myBG = loadImage('images/background.png');
-	tomato = loadImage('images/tomato.png');
-	target = loadImage('images/target.png');
-	dTarget = loadImage('images/dTarget.png');
-	paddle = loadImage('images/paddle.png');
+	myBG = loadImage('background.png');
+	tomato = loadImage('tomato.png');
+	target = loadImage('target.png');
+	dTarget = loadImage('dTarget.png');
+	paddle = loadImage('paddle.png');
 
 	soundFormats('ogg', 'mp3');
 
-	bing = loadSound("sounds/bing.ogg");
-	bong = loadSound("sounds/bong.ogg");
+	bing = loadSound("bing.ogg");
+	bong = loadSound("bong.ogg");
 
-	sound1 = loadSound("sounds/oyaye.mp3");
-	sound2 = loadSound("sounds/wrong.mp3");
-	sound3 = loadSound("sounds/fired.mp3");
+	sound1 = loadSound("oyaye.mp3");
+	sound2 = loadSound("wrong.mp3");
+	sound3 = loadSound("fired.mp3");
 }
 //Setup canvas, using center image and rectangle moes
 function setup(){
@@ -133,12 +133,6 @@ function draw(){
 		image(dTarget, oldTargetX, oldTargetY, 100, 100);
 		fc-= 1;
 	}
-	if(boolCounter > 0){
-		boolCounter--;
-		if(boolCounter == 0){
-			giveItASecond = false;
-		}
-	}
 	//If the tomato has fallen through the floor...
 	if(tomatoMustReset){
 		tomatoYdir = "down";
@@ -156,6 +150,12 @@ function draw(){
 		moveValX = random(3);
 		moveValY = random(3);
 		tomatoMustReset = false;
+	}
+	if(boolCounter > 0){
+		boolCounter--;
+		if(boolCounter == 0){
+			giveItASecond = false;
+		}
 	}
 	else{
 		//If the tomato hits the leftmost wall...
