@@ -57,6 +57,11 @@ var sound1;
 var sound2;
 var sound3;
 
+//Sounds that play when the ball misses
+var failSound1;
+var failSound2;
+var failSound3;
+
 //Used to prevent balls going too far into the walls if their acceleration is too high, which can cause a bug
 //If give it a second is true, then the program will wait another frame of draw to change the x and y direction of the tomato
 var giveItASecond = false;
@@ -79,6 +84,10 @@ function preload(){
 	sound1 = loadSound("sounds/oyaye.mp3");
 	sound2 = loadSound("sounds/wrong.mp3");
 	sound3 = loadSound("sounds/fired.mp3");
+
+	failSound1 = loadSound("sounds/gethimout.mp3");
+	failSound2 = loadSound("sounds/sitdown.mp3");
+	failSound3 = loadSound("sounds/trumptrumptrump.mp3");
 }
 //Setup canvas, using center image and rectangle moes
 function setup(){
@@ -161,17 +170,22 @@ function draw(){
 		//If the tomato hits the leftmost wall...
 		if (tomatoX <= 67.5 && !giveItASecond){
 			turnAroundX();
+			moveValX += Math.random();
 			giveItASecond = true;
 			boolCounter = 2;
 		}
 		//If the tomato hits the rightmost wall...
 		else if(tomatoX >= 637.5 && !giveItASecond){
 			turnAroundX();
+			//add a bit to the speed, a random amount between 0 and 1, when the ball bounces.
+			moveValX += Math.random();
 			giveItASecond = true;
 			boolCounter = 2;
 		}
 		//If the tomato hits the ceiling...
 		if(tomatoY <= 65 && !giveItASecond){
+			//add a bit to the speed, a random amount between 0 and 1, when the ball bounces.
+			moveValY += Math.random();
 			tomatoYdir = "down";
 			var bingNum = random(2);
 			if(bingNum <= 1){
@@ -190,6 +204,7 @@ function draw(){
 		//If the tomato misses the paddle...
 		else if(tomatoY > 580){
 			//Increment miss counter and reset tomato
+			playFailSound();
 			misses++;
 			tomatoMustReset = true;
 		}
@@ -207,8 +222,8 @@ function draw(){
 			tomatoY-=moveValY;
 		}
 		//Ups the speed of the tomato until it resets
-		moveValX+=.01;
-		moveValY+=.01;
+		moveValX+=.005;
+		moveValY+=.005;
 	}
 	image(tomato, tomatoX, tomatoY, 100, 100);
 	//If the tomato hits the target...
@@ -283,10 +298,12 @@ function turnAroundPaddle(){
 	if(tomatoX <paddleX){
 		turnAroundY();
 		tomatoXdir = "left";
+		moveValX += Math.random();
 	}
 	else{
 		turnAroundY();
 		tomatoXdir = "right";
+		moveValY += Math.random();
 	}
 }
 //Checks to see if there is a collision between the tomato and the target
@@ -297,4 +314,17 @@ function isTargetCollision(){
 		return true;
 	}
 	return false;
+}
+//Determine which of the three failing sounds will play
+function playFailSound(){
+	var failNum = random(3);
+	if(failNum <= 1){
+		failSound1.play();
+	}
+	else if (failNum <= 2){
+		failSound2.play();
+	}
+	else{
+		failSound3.play();
+	}
 }
