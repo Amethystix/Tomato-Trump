@@ -76,11 +76,12 @@ function preload(){
 	dTarget = loadImage('images/dTarget.png');
 	paddle = loadImage('images/paddle.png');
 
-	soundFormats('ogg', 'mp3');
+	soundFormats('ogg');
 
 	bing = loadSound("sounds/bing.ogg");
 	bong = loadSound("sounds/bong.ogg");
-
+	
+	soundFormats('mp3');
 	sound1 = loadSound("sounds/oyaye.mp3");
 	sound2 = loadSound("sounds/wrong.mp3");
 	sound3 = loadSound("sounds/fired.mp3");
